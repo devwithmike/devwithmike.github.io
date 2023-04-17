@@ -1,0 +1,15 @@
+---
+import Link from './Link.astro';
+
+export interface Props {
+  name: string;
+}
+
+const { name } = Astro.props;
+---
+
+<li
+  class="inline-block my-3 mx-1"
+>
+	<Link href={`/articles/tags/${name}`} classes="pr-2 text-lg group underline" text={`#${name}`} />
+</li>

@@ -1,0 +1,57 @@
+---
+import '../styles/global.css';
+
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import Link from '../components/Link.astro';
+import Head from './Head.astro';
+---
+
+<!DOCTYPE html>
+<html lang='en' class='dark'>
+	<Head />
+	<body class='bg-white dark:bg-zinc-900'>
+		<Header />
+		<main class='relative isolate min-h-full'>
+			<div class='mx-auto max-w-7xl px-6 py-32 text-center sm:py-40 lg:px-8'>
+				<p class='text-base font-semibold leading-8 text-zinc-900 dark:text-white'>404</p>
+				<h1
+					class='mt-4 text-3xl font-bold tracking-tight text-zinc-900 dark:text-white sm:text-5xl'
+				>
+					Page not found
+				</h1>
+				<p class='mt-4 text-base text-zinc-900/70 dark:text-white/70 sm:mt-6'>
+					Sorry, we couldn’t find the page you’re looking for.
+				</p>
+				<div class='mt-10 flex justify-center'>
+					<Link
+						href='/'
+						text='Back to home'
+						classes='text-teal-500 dark:text-teal-400 text-sm font-semibold leading-7'
+						icon={{ name: 'ic:baseline-arrow-back', side: 'left' }}
+					/>
+				</div>
+			</div>
+		</main>
+		<Footer />
+	</body>
+</html>
+
+<script is:inline>
+	const theme = (() => {
+		if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
+			return localStorage.getItem('theme');
+		}
+		if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+			return 'dark';
+		}
+		return 'light';
+	})();
+
+	if (theme === 'light') {
+		document.documentElement.classList.remove('dark');
+	} else {
+		document.documentElement.classList.add('dark');
+	}
+	window.localStorage.setItem('theme', theme);
+</script>

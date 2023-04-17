@@ -1,0 +1,18 @@
+---
+import Link from './Link.astro'
+
+const { prevUrl, nextUrl } = Astro.props;
+---
+
+<nav aria-label="Atricle Pages" class="flex gap-6">
+	{
+		prevUrl && (
+			<Link href={prevUrl} text="Previous" icon={{ name: "tabler:arrow-narrow-left", side: "left" }} />
+		)
+	}
+	{
+		nextUrl && (
+			<Link href={nextUrl} text="Next" icon={{ name: "tabler:arrow-narrow-right", side: "right" }} />
+		)
+	}
+</nav>

@@ -1,0 +1,522 @@
+---
+title: Build a Go REST API with Fiber and MongoDB
+tags:
+  - go
+  - mongodb
+  - fiber
+  - api
+datetime: 2021-05-25
+draft: false
+slug: build-a-go-rest-api-with-fiber-and-mongodb
+description: In this tutorial, we will create a Movie Catchphrase API with Fiber (a Go web framework) and the go mongo driver in order to interact with the MongoDB instance.
+---
+
+In this tutorial, we will create a Movie Catchphrase API that allows you to Create, Read, Update and Delete Catchphrases, or in short perform CRUD operations.
+
+We are going to use Fiber (a Go web framework) and the go mongo driver in order to interact with the MongoDB instance.
+
+For this project, I assume you have already installed go onto your computer. You can verify the installation by running the following command in the terminal:
+
+```
+go
+```
+
+If you haven’t installed it yet, you can download the necessary installer on the [official golang website](https://golang.org/dl/).
+
+## MongoDB Setup
+
+For this project, I assume you already have set up a MongoDB cluster (or a local MongoDB installation) and have the connection URI. If not you can refer to these links for an installation guide: [MongoDB cluster](https://docs.atlas.mongodb.com/getting-started/) or [MongoDB local](https://docs.mongodb.com/manual/administration/install-community/)
+
+## Project Setup
+
+The first thing we need to do is set up the project by creating a folder for the project. inside the folder, we will initialize the project with go mod and install the packages we are going to use. Run the following commands to set up the project:
+
+```bash
+go mod init
+go get -u github.com/gofiber/fiber/v2
+go get go.mongodb.org/mongo-driver/mongo
+go get github.com/joho/godotenv
+```
+
+`godotenv` will allow us to pull in environment variables from a `.env` file. Create a `.env` file in the root of the project and add the following:
+
+```
+MONGO_URI=Your_MongoDB_URI_comes_here
+DB=Your_DB_name_comes_here
+PORT=3000
+APP_ENV=development
+```
+
+Next, let’s create a `.gitignore` file in the root of the project and add the following:
+
+```
+# Binaries for programs and plugins
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Test binary, built with `go test -c`
+*.test
+
+# Output of the go coverage tool, specifically when used with LiteIDE
+*.out
+
+# Dependency directories (remove the comment below to include it)
+# vendor/
+
+.env
+```
+
+## Start Building the API
+
+Let’s create a `main.go` file at the root of the project. This will contain a basic server setup with a basic route. Add the following to the file:
+
+```go
+package main
+
+import "github.com/gofiber/fiber/v2"
+
+func main() {
+    app := fiber.New()
+
+    app.Get("/", func(c *fiber.Ctx) error {
+        return c.SendString("Hello, World 👋!")
+    })
+
+    app.Listen(":3000")
+}
+```
+
+In order to start the application, run the following command:
+
+```bash
+go run main.go
+```
+
+Navigate to `localhost:3000` in the browser to view the application.
+
+## Configuring and Connecting to the database
+
+Always keep all the configurations for the app in a separate folder. Let’s create a new folder `config` in the root folder of our application for keeping all the configurations.
+
+Create a new file `db.go` inside the config folder with the following contents:
+
+```go
+package config
+
+import (
+    "context"
+    "fmt"
+    "log"
+    "os"
+    "time"
+
+    "github.com/joho/godotenv"
+    "go.mongodb.org/mongo-driver/mongo"
+    "go.mongodb.org/mongo-driver/mongo/options"
+    "go.mongodb.org/mongo-driver/mongo/readpref"
+)
+
+type MongoInstance struct {
+    Client *mongo.Client
+    DB     *mongo.Database
+}
+
+var MI MongoInstance
+
+func ConnectDB() {
+    if os.Getenv("APP_ENV") != "production" {
+        err := godotenv.Load()
+        if err != nil {
+            log.Fatal("Error loading .env file")
+        }
+    }
+
+    client, err := mongo.NewClient(options.Client().ApplyURI(os.Getenv("MONGO_URI")))
+    if err != nil {
+        log.Fatal(err)
+    }
+
+    ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+    defer cancel()
+
+    err = client.Connect(ctx)
+    if err != nil {
+        log.Fatal(err)
+    }
+
+    err = client.Ping(ctx, readpref.Primary())
+    if err != nil {
+        log.Fatal(err)
+    }
+
+    fmt.Println("Database connected!")
+
+    MI = MongoInstance{
+        Client: client,
+        DB:     client.Database(os.Getenv("DB")),
+    }
+}
+```
+
+We are going to use the MI object in order to query the collection.
+
+## Creating the Catchphrase Model
+
+Let’s create a new folder `models` in the root folder of our application for keeping all the models.
+
+Create a new file `Catchphrase.go` inside the models folder with the following contents:
+
+```go
+package models
+
+import (
+    "go.mongodb.org/mongo-driver/bson/primitive"
+)
+
+type Catchphrase struct {
+    ID           primitive.ObjectID `json:"_id,omitempty" bson:"_id,omitempty"`
+    MovieName    string             `json:"movieName,omitempty" bson:"movieName,omitempty"`
+    Catchphrase  string             `json:"catchphrase,omitempty" bson:"catchphrase,omitempty"`
+    MovieContext string             `json:"movieContext,omitempty" bson:"movieContext,omitempty"`
+}
+```
+
+## Creating the Catchphrases Controller
+
+Let’s create a new folder `controllers` in the root folder of our application for keeping all the controllers.
+
+Create a new file `catchphraseController.go` inside the controllers folder with the following contents:
+
+```go
+package controllers
+
+import (
+    "context"
+    "log"
+    "math"
+    "strconv"
+    "time"
+
+    "github.com/gofiber/fiber/v2"
+    "github.com/mikefmeyer/catchphrase-go-mongodb-rest-api/config"
+    "github.com/mikefmeyer/catchphrase-go-mongodb-rest-api/models"
+    "go.mongodb.org/mongo-driver/bson"
+    "go.mongodb.org/mongo-driver/bson/primitive"
+    "go.mongodb.org/mongo-driver/mongo/options"
+)
+
+func GetAllCatchphrases(c *fiber.Ctx) error {
+    catchphraseCollection := config.MI.DB.Collection("catchphrases")
+    ctx, _ := context.WithTimeout(context.Background(), 10*time.Second)
+
+    var catchphrases []models.Catchphrase
+
+    filter := bson.M{}
+    findOptions := options.Find()
+
+    if s := c.Query("s"); s != "" {
+        filter = bson.M{
+            "$or": []bson.M{
+                {
+                    "movieName": bson.M{
+                        "$regex": primitive.Regex{
+                            Pattern: s,
+                            Options: "i",
+                        },
+                    },
+                },
+                {
+                    "catchphrase": bson.M{
+                        "$regex": primitive.Regex{
+                            Pattern: s,
+                            Options: "i",
+                        },
+                    },
+                },
+            },
+        }
+    }
+
+    page, _ := strconv.Atoi(c.Query("page", "1"))
+    limitVal, _ := strconv.Atoi(c.Query("limit", "10"))
+    var limit int64 = int64(limitVal)
+
+    total, _ := catchphraseCollection.CountDocuments(ctx, filter)
+
+    findOptions.SetSkip((int64(page) - 1) * limit)
+    findOptions.SetLimit(limit)
+
+    cursor, err := catchphraseCollection.Find(ctx, filter, findOptions)
+    defer cursor.Close(ctx)
+
+    if err != nil {
+        return c.Status(fiber.StatusNotFound).JSON(fiber.Map{
+            "success": false,
+            "message": "Catchphrases Not found",
+            "error":   err,
+        })
+    }
+
+    for cursor.Next(ctx) {
+        var catchphrase models.Catchphrase
+        cursor.Decode(&catchphrase)
+        catchphrases = append(catchphrases, catchphrase)
+    }
+
+    last := math.Ceil(float64(total / limit))
+    if last < 1 && total > 0 {
+        last = 1
+    }
+
+    return c.Status(fiber.StatusOK).JSON(fiber.Map{
+        "data":      catchphrases,
+        "total":     total,
+        "page":      page,
+        "last_page": last,
+        "limit":     limit,
+    })
+}
+
+func GetCatchphrase(c *fiber.Ctx) error {
+    catchphraseCollection := config.MI.DB.Collection("catchphrases")
+    ctx, _ := context.WithTimeout(context.Background(), 10*time.Second)
+
+    var catchphrase models.Catchphrase
+    objId, err := primitive.ObjectIDFromHex(c.Params("id"))
+    findResult := catchphraseCollection.FindOne(ctx, bson.M{"_id": objId})
+    if err := findResult.Err(); err != nil {
+        return c.Status(fiber.StatusNotFound).JSON(fiber.Map{
+            "success": false,
+            "message": "Catchphrase Not found",
+            "error":   err,
+        })
+    }
+
+    err = findResult.Decode(&catchphrase)
+    if err != nil {
+        return c.Status(fiber.StatusNotFound).JSON(fiber.Map{
+            "success": false,
+            "message": "Catchphrase Not found",
+            "error":   err,
+        })
+    }
+
+    return c.Status(fiber.StatusOK).JSON(fiber.Map{
+        "data":    catchphrase,
+        "success": true,
+    })
+}
+
+func AddCatchphrase(c *fiber.Ctx) error {
+    catchphraseCollection := config.MI.DB.Collection("catchphrases")
+    ctx, _ := context.WithTimeout(context.Background(), 10*time.Second)
+    catchphrase := new(models.Catchphrase)
+
+    if err := c.BodyParser(catchphrase); err != nil {
+        log.Println(err)
+        return c.Status(400).JSON(fiber.Map{
+            "success": false,
+            "message": "Failed to parse body",
+            "error":   err,
+        })
+    }
+
+    result, err := catchphraseCollection.InsertOne(ctx, catchphrase)
+    if err != nil {
+        return c.Status(500).JSON(fiber.Map{
+            "success": false,
+            "message": "Catchphrase failed to insert",
+            "error":   err,
+        })
+    }
+    return c.Status(fiber.StatusCreated).JSON(fiber.Map{
+        "data":    result,
+        "success": true,
+        "message": "Catchphrase inserted successfully",
+    })
+
+}
+
+func UpdateCatchphrase(c *fiber.Ctx) error {
+    catchphraseCollection := config.MI.DB.Collection("catchphrases")
+    ctx, _ := context.WithTimeout(context.Background(), 10*time.Second)
+    catchphrase := new(models.Catchphrase)
+
+    if err := c.BodyParser(catchphrase); err != nil {
+        log.Println(err)
+        return c.Status(400).JSON(fiber.Map{
+            "success": false,
+            "message": "Failed to parse body",
+            "error":   err,
+        })
+    }
+
+    objId, err := primitive.ObjectIDFromHex(c.Params("id"))
+    if err != nil {
+        return c.Status(fiber.StatusNotFound).JSON(fiber.Map{
+            "success": false,
+            "message": "Catchphrase not found",
+            "error":   err,
+        })
+    }
+
+    update := bson.M{
+        "$set": catchphrase,
+    }
+    _, err = catchphraseCollection.UpdateOne(ctx, bson.M{"_id": objId}, update)
+    if err != nil {
+        return c.Status(500).JSON(fiber.Map{
+            "success": false,
+            "message": "Catchphrase failed to update",
+            "error":   err.Error(),
+        })
+    }
+    return c.Status(fiber.StatusCreated).JSON(fiber.Map{
+        "success": true,
+        "message": "Catchphrase updated successfully",
+    })
+}
+
+func DeleteCatchphrase(c *fiber.Ctx) error {
+    catchphraseCollection := config.MI.DB.Collection("catchphrases")
+    ctx, _ := context.WithTimeout(context.Background(), 10*time.Second)
+
+    objId, err := primitive.ObjectIDFromHex(c.Params("id"))
+    if err != nil {
+        return c.Status(fiber.StatusNotFound).JSON(fiber.Map{
+            "success": false,
+            "message": "Catchphrase not found",
+            "error":   err,
+        })
+    }
+    _, err = catchphraseCollection.DeleteOne(ctx, bson.M{"_id": objId})
+    if err != nil {
+        return c.Status(500).JSON(fiber.Map{
+            "success": false,
+            "message": "Catchphrase failed to delete",
+            "error":   err,
+        })
+    }
+    return c.Status(fiber.StatusCreated).JSON(fiber.Map{
+        "success": true,
+        "message": "Catchphrase deleted successfully",
+    })
+}
+```
+
+The controller file will contain the logic used to query our database.
+
+## Creating the Catchphrases Route
+
+Let’s create a new folder `routes` in the root folder of our application for keeping all the routes.
+
+Create a new file `catchphrases.go` inside the routes folder with the following contents:
+
+```go
+package routes
+
+import (
+    "github.com/gofiber/fiber/v2"
+    "github.com/mikefmeyer/catchphrase-go-mongodb-rest-api/controllers" // replace
+)
+
+func CatchphrasesRoute(route fiber.Router) {
+    route.Get("/", controllers.GetAllCatchphrases)
+    route.Get("/:id", controllers.GetCatchphrase)
+    route.Post("/", controllers.AddCatchphrase)
+    route.Put("/:id", controllers.UpdateCatchphrase)
+    route.Delete("/:id", controllers.DeleteCatchphrase)
+}
+```
+
+## Put it all together
+
+Modify the `main.go` file as follows:
+
+```go
+package main
+
+import (
+    "log"
+    "os"
+
+    "github.com/gofiber/fiber/v2"
+    "github.com/gofiber/fiber/v2/middleware/cors"
+    "github.com/gofiber/fiber/v2/middleware/logger"
+    "github.com/joho/godotenv"
+    "github.com/mikefmeyer/catchphrase-go-mongodb-rest-api/config"
+    "github.com/mikefmeyer/catchphrase-go-mongodb-rest-api/routes"
+)
+
+func setupRoutes(app *fiber.App) {
+    app.Get("/", func(c *fiber.Ctx) error {
+        return c.Status(fiber.StatusOK).JSON(fiber.Map{
+            "success":     true,
+            "message":     "You are at the root endpoint 😉",
+            "github_repo": "https://github.com/MikeFMeyer/catchphrase-go-mongodb-rest-api",
+        })
+    })
+
+    api := app.Group("/api")
+
+    routes.CatchphrasesRoute(api.Group("/catchphrases"))
+}
+
+func main() {
+    if os.Getenv("APP_ENV") != "production" {
+        err := godotenv.Load()
+        if err != nil {
+            log.Fatal("Error loading .env file")
+        }
+    }
+
+    app := fiber.New()
+
+    app.Use(cors.New())
+    app.Use(logger.New())
+
+    config.ConnectDB()
+
+    setupRoutes(app)
+
+    port := os.Getenv("PORT")
+    err := app.Listen(":" + port)
+
+    if err != nil {
+        log.Fatal("Error app failed to start")
+        panic(err)
+    }
+}
+```
+
+After running the application you should be able to navigate to the following route `localhost:3000/api/catchphrases` to see the catchphrases in your database.
+
+## Hosting on Heroku
+
+Heroku allows you to host your application free of charge, but with limited resources. To set up the project use the following webpage from the [official Heroku documentation](https://devcenter.heroku.com/articles/getting-started-with-nodejs?singlepage=true).
+
+Note: You might need to add the following config vars in order to run the application:
+
+```
+MONGO_URI = <Your mongo uri>
+
+DB = <Your database name>
+
+PORT = 8080
+
+APP_ENV = production
+```
+
+## Extra
+
+This is the dataset that I used for this API.
+
+[Movie Catchphrases Dataset](https://www.kaggle.com/thomaskonstantin/150-famous-movie-catchphrases-with-context)
+
+
+## Thanks for reading
+
+This is a very basic example of a REST API built with Fiber (Go) and MongoDB. The code can be downloaded from [Github](https://github.com/MikeFMeyer/catchphrase-go-mongodb-rest-api).

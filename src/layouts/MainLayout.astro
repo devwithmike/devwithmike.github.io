@@ -1,0 +1,55 @@
+---
+import '../styles/global.css';
+
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import Head from './Head.astro';
+import type { Frontmatter } from "../types";
+
+interface Props {
+	title?: string;
+	description?: string;
+	image?: string,
+	frontmatter?: Frontmatter,
+	robots?: any
+}
+
+const { title = "Learn & Build With Mike", description = "A enthusiastic software engineers thoughts", image, frontmatter, robots } = Astro.props as Props;
+---
+
+<!DOCTYPE html>
+<html lang='en' class='dark'>
+	<Head title={title} description={description} image={image} frontmatter={frontmatter} robots={robots} />
+	<body class='bg-white dark:bg-zinc-900'>
+		<Header />
+		<div class='sm:px-8 mt-12 sm:mt-20'>
+			<div class='mx-auto max-w-7xl lg:px-8'>
+				<div class='relative px-4 sm:px-8 lg:px-12'>
+					<div class='mx-auto max-w-2xl lg:max-w-5xl'>
+						<slot />
+					</div>
+				</div>
+			</div>
+		</div>
+		<Footer />
+	</body>
+</html>
+
+<script is:inline>
+	const theme = (() => {
+		if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
+			return localStorage.getItem('theme');
+		}
+		if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+			return 'dark';
+		}
+		return 'light';
+	})();
+
+	if (theme === 'light') {
+		document.documentElement.classList.remove('dark');
+	} else {
+		document.documentElement.classList.add('dark');
+	}
+	window.localStorage.setItem('theme', theme);
+</script>
