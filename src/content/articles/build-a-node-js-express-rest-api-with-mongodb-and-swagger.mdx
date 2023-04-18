@@ -13,13 +13,13 @@ description: In this tutorial, we will create a Movie Catchphrase API with Expre
 
 In this tutorial, we will create a Movie Catchphrase API that allows you to Create, Read, Update and Delete Catchphrases, or in short perform CRUD operations.
 
-We are going to use Node.js and Express with Mongoose in order to interact with the MongoDB instance. We will use Swagger to document the API we created.
+We are going to use Node.js and Express with Mongoose to interact with the MongoDB instance. We will use Swagger to document the API we created.
 
-## MongoDB Setup
+## **MongoDB Setup**
 
 For this project, I assume you already have set up a MongoDB cluster (or a local MongoDB installation) and have the connection URI. If not you can refer to these links for an installation guide: [MongoDB cluster](https://docs.atlas.mongodb.com/getting-started/) or [MongoDB local](https://docs.mongodb.com/manual/administration/install-community/)
 
-## Project Setup
+## **Project Setup**
 
 The first thing we need to do is set up the project by initializing with npm and installing the packages we are going to use. Run the following commands to set up the project:
 
@@ -31,13 +31,13 @@ npm install --save-dev dotenv nodemon
 
 `dotenv` will allow us to pull in environment variables from a `.env` file. Create a `.env` file in the root of the project and add the following:
 
-```
+```plaintext
 MONGO_URI=Your_MongoDB_URI_comes_here
 ```
 
-Next, let’s create a `.gitignore` file in the root of the project and add the following:
+Next, let's create a `.gitignore` file in the root of the project and add the following:
 
-```
+```plaintext
 .env
 node_modules
 ```
@@ -51,13 +51,13 @@ Change the `package.json` scripts with the following:
 },
 ```
 
->Note: Nodemon allows you to keep the application running while making changes.
+> Note: Nodemon allows you to keep the application running while making changes.
 
-## Start Building the API
+## **Start Building the API**
 
-Let’s create a `server.js` file at the root of the project. This will contain a basic server setup with a basic route. Add the following to the file:
+Let's create a `server.js` file at the root of the project. This will contain a basic server setup with a basic route. Add the following to the file:
 
-```js
+```javascript
 const express = require('express');
 
 const app = express();
@@ -79,13 +79,13 @@ npm run dev
 
 Navigate to `localhost:5000` in the browser to view the application.
 
-## Configuring and Connecting to the database
+## **Configuring and Connecting to the database**
 
 Always keep all the configurations for the app in a separate folder. Let’s create a new folder `config` in the root folder of our application for keeping all the configurations.
 
 Create a new file `db.js` inside the config folder with the following contents:
 
-```js
+```javascript
 const mongoose = require('mongoose');
 require("dotenv").config();
 
@@ -109,7 +109,7 @@ module.exports = connectDB;
 
 We are going to import the above database configuration in `server.js` and call the `connectDB` function to connect to our MongoDB database. Update the `server.js` accordingly:
 
-```js
+```javascript
 const express = require('express');
 const connectDb = require("./config/db");
 
@@ -125,13 +125,13 @@ app.get('/', (req, res) => {
 app.listen(process.env.PORT || 5000, () => console.log('Up and running 🚀'));
 ```
 
-## Creating the Catchphrase Model
+## **Creating the Catchphrase Model**
 
 Let’s create a new folder `models` in the root folder of our application for keeping all the models.
 
 Create a new file `catchphrase.js` inside the models folder with the following contents:
 
-```js
+```javascript
 const mongoose = require("mongoose");
 const  Schema  = mongoose.Schema;
 
@@ -152,13 +152,13 @@ const Catchphrase = mongoose.model('Catchphrase', catchphraseSchema);
 module.exports = Catchphrase;
 ```
 
-## Creating the Catchphrases Controller
+## **Creating the Catchphrases Controller**
 
 Let’s create a new folder `controllers` in the root folder of our application for keeping all the controllers.
 
 Create a new file `catchphraseController.js` inside the controllers folder with the following contents:
 
-```js
+```javascript
 const Catchphrase = require('../models/catchphrase');
 
 async function getAllCatchphrases(search, reqPage, reqLimit) {
@@ -292,17 +292,16 @@ module.exports = {
 
 The controller file will contain the logic used to query our database.
 
-## Creating the Catchphrases Route
+## **Creating the Catchphrases Route**
 
 Let’s create a new folder `routes` in the root folder of our application for keeping all the routes.
 
 Create a new file `catchphrases.js` inside the routes folder with the following contents:
 
-```js
+```javascript
 const express = require('express');
 const router = express.Router();
 let { getAllCatchphrases, getCatchphraseById, addCatchphrase, updateCatchphrase, removeCatchphrase } = require('../controllers/catchphraseController')
-
 
 router.get('/', async (req, res) => {
     let response = await getAllCatchphrases(req.query.s, req.query.page, req.query.limit);
@@ -313,12 +312,10 @@ router.get('/', async (req, res) => {
     }
 });
 
-
 router.get('/:id', async (req, res) => {
     let response = await getCatchphraseById(req.params.id);
     res.json(response);
 });
-
 
 router.post('/', async (req, res) => {
     let body = {
@@ -335,7 +332,6 @@ router.post('/', async (req, res) => {
     }
 });
 
-
 router.put('/:id', async (req, res) => {
     let movieName = null, catchphrase = null, movieContext = null;
     if (req.body.movieName) {movieName = req.body.movieName}
@@ -349,7 +345,6 @@ router.put('/:id', async (req, res) => {
         res.status(404).json(response);
     }
 });
-
 
 router.delete('/:id', async (req, res) => {
     let response = await removeCatchphrase(req.params.id)
@@ -365,7 +360,7 @@ module.exports = router;
 
 Create a new file `index.js` inside the routes folder with the following contents:
 
-```js
+```javascript
 const catchphrases = require('./catchphrases')
 
 module.exports = {
@@ -373,11 +368,11 @@ module.exports = {
 }
 ```
 
-In this file, we will import all of the routes we create. This will allow us to import this file in our `server.js` to define our routes.
+In this file, we will import all of the routes we create. This will allow us to import this file into our `server.js` to define our routes.
 
 Modify the `server.js` file as follows:
 
-```js
+```javascript
 const express = require('express');
 const connectDb = require("./config/db");
 const { catchphrases } = require("./routes/index");
@@ -394,17 +389,17 @@ app.listen(process.env.PORT || 5000, () => console.log('Up and running 🚀'));
 
 After running the application you should be able to navigate to the following route `localhost:5000/catchphrases` to see all the catchphrases in your database (if there are any 😉)
 
-## Adding Swagger documentation
+## **Adding Swagger documentation**
 
-Swagger allows us to auto document our API. Let’s start by installing the following packages:
+Swagger allows us to auto-document our API. Let's start by installing the following packages:
 
 ```bash
 npm install --save swagger-ui-express swagger-jsdoc@6.0.0
 ```
 
-Next change the `server.js` file accordingly:
+Next, change the `server.js` file accordingly:
 
-```js
+```javascript
 const express = require('express');
 const connectDb = require("./config/db");
 const { catchphrases } = require("./routes/index");
@@ -431,13 +426,12 @@ app.use('/catchphrases', catchphrases)
 const swaggerDocs = swaggerJsDoc(swaggerOptions);
 app.use('/', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
-
 app.listen(process.env.PORT || 5000, () => console.log('Up and running 🚀'));
 ```
 
 Next, we need to describe our routes. Change the `catchphrases.js` file located in the routes folder accordingly:
 
-```js
+```javascript
 const express = require('express');
 const router = express.Router();
 let { getAllCatchphrases, getCatchphraseById, addCatchphrase, updateCatchphrase, removeCatchphrase } = require('../controllers/catchphraseController')
@@ -585,13 +579,13 @@ module.exports = router;
 
 After running the application you should be able to navigate to the following route `localhost:5000` to see the documentation generated by Swagger.
 
-## Hosting on Heroku
+## **Hosting on Heroku**
 
-Heroku allows you to host your application free of charge, but with limited resources. To set up the project use the following webpage from the [official Heroku documentation](https://devcenter.heroku.com/articles/getting-started-with-nodejs?singlepage=true).
+Heroku allows you to host your application free of charge but with limited resources. To set up the project use the following webpage from the [official Heroku documentation](https://devcenter.heroku.com/articles/getting-started-with-nodejs?singlepage=true).
 
-Note: You might need to add the following config vars in order to run the application:
+Note: You might need to add the following config vars to run the application:
 
-```
+```plaintext
 MONGO_URI = <Your mongo uri>
 
 NODE_ENV = production
@@ -599,13 +593,12 @@ NODE_ENV = production
 NPM_CONFIG_PRODUCTION = false
 ```
 
-## Extra
+## **Extra**
 
 This is the dataset that I used for this API.
 
 [Movie Catchphrases Dataset](https://www.kaggle.com/thomaskonstantin/150-famous-movie-catchphrases-with-context)
 
+## **Thanks for reading**
 
-## Thanks for reading
-
-This is a very basic example of a REST API built with Node.js/Express and MongoDB. The code can be downloaded from [Github](https://github.com/MikeFMeyer/catchphrase-rest-api).
+This is a very basic example of a REST API built with Node.js/Express and MongoDB. The code can be downloaded from [GitHub](https://github.com/MikeFMeyer/catchphrase-rest-api).

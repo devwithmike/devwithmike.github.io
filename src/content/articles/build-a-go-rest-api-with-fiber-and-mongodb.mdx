@@ -17,17 +17,17 @@ We are going to use Fiber (a Go web framework) and the go mongo driver in order 
 
 For this project, I assume you have already installed go onto your computer. You can verify the installation by running the following command in the terminal:
 
-```
+```bash
 go
 ```
 
-If you haven’t installed it yet, you can download the necessary installer on the [official golang website](https://golang.org/dl/).
+If you haven't installed it yet, you can download the necessary installer on the [official golang website](https://golang.org/dl/).
 
-## MongoDB Setup
+## **MongoDB Setup**
 
 For this project, I assume you already have set up a MongoDB cluster (or a local MongoDB installation) and have the connection URI. If not you can refer to these links for an installation guide: [MongoDB cluster](https://docs.atlas.mongodb.com/getting-started/) or [MongoDB local](https://docs.mongodb.com/manual/administration/install-community/)
 
-## Project Setup
+## **Project Setup**
 
 The first thing we need to do is set up the project by creating a folder for the project. inside the folder, we will initialize the project with go mod and install the packages we are going to use. Run the following commands to set up the project:
 
@@ -40,16 +40,16 @@ go get github.com/joho/godotenv
 
 `godotenv` will allow us to pull in environment variables from a `.env` file. Create a `.env` file in the root of the project and add the following:
 
-```
+```plaintext
 MONGO_URI=Your_MongoDB_URI_comes_here
 DB=Your_DB_name_comes_here
 PORT=3000
 APP_ENV=development
 ```
 
-Next, let’s create a `.gitignore` file in the root of the project and add the following:
+Next, let's create a `.gitignore` file in the root of the project and add the following:
 
-```
+```plaintext
 # Binaries for programs and plugins
 *.exe
 *.exe~
@@ -69,9 +69,9 @@ Next, let’s create a `.gitignore` file in the root of the project and add the 
 .env
 ```
 
-## Start Building the API
+## **Start Building the API**
 
-Let’s create a `main.go` file at the root of the project. This will contain a basic server setup with a basic route. Add the following to the file:
+Let's create a `main.go` file at the root of the project. This will contain a basic server setup with a basic route. Add the following to the file:
 
 ```go
 package main
@@ -89,7 +89,7 @@ func main() {
 }
 ```
 
-In order to start the application, run the following command:
+To start the application, run the following command:
 
 ```bash
 go run main.go
@@ -97,7 +97,7 @@ go run main.go
 
 Navigate to `localhost:3000` in the browser to view the application.
 
-## Configuring and Connecting to the database
+## **Configuring and Connecting to the database**
 
 Always keep all the configurations for the app in a separate folder. Let’s create a new folder `config` in the root folder of our application for keeping all the configurations.
 
@@ -161,9 +161,9 @@ func ConnectDB() {
 }
 ```
 
-We are going to use the MI object in order to query the collection.
+We are going to use the MI object to query the collection.
 
-## Creating the Catchphrase Model
+## **Creating the Catchphrase Model**
 
 Let’s create a new folder `models` in the root folder of our application for keeping all the models.
 
@@ -184,7 +184,7 @@ type Catchphrase struct {
 }
 ```
 
-## Creating the Catchphrases Controller
+## **Creating the Catchphrases Controller**
 
 Let’s create a new folder `controllers` in the root folder of our application for keeping all the controllers.
 
@@ -409,7 +409,7 @@ func DeleteCatchphrase(c *fiber.Ctx) error {
 
 The controller file will contain the logic used to query our database.
 
-## Creating the Catchphrases Route
+## **Creating the Catchphrases Route**
 
 Let’s create a new folder `routes` in the root folder of our application for keeping all the routes.
 
@@ -432,7 +432,7 @@ func CatchphrasesRoute(route fiber.Router) {
 }
 ```
 
-## Put it all together
+## **Put it all together**
 
 Modify the `main.go` file as follows:
 
@@ -456,7 +456,7 @@ func setupRoutes(app *fiber.App) {
         return c.Status(fiber.StatusOK).JSON(fiber.Map{
             "success":     true,
             "message":     "You are at the root endpoint 😉",
-            "github_repo": "https://github.com/MikeFMeyer/catchphrase-go-mongodb-rest-api",
+            "github_repo": "<https://github.com/MikeFMeyer/catchphrase-go-mongodb-rest-api>",
         })
     })
 
@@ -494,13 +494,13 @@ func main() {
 
 After running the application you should be able to navigate to the following route `localhost:3000/api/catchphrases` to see the catchphrases in your database.
 
-## Hosting on Heroku
+## **Hosting on Heroku**
 
-Heroku allows you to host your application free of charge, but with limited resources. To set up the project use the following webpage from the [official Heroku documentation](https://devcenter.heroku.com/articles/getting-started-with-nodejs?singlepage=true).
+Heroku allows you to host your application free of charge but with limited resources. To set up the project use the following webpage from the [official Heroku documentation](https://devcenter.heroku.com/articles/getting-started-with-go?singlepage=true).
 
-Note: You might need to add the following config vars in order to run the application:
+Note: You might need to add the following config vars to run the application:
 
-```
+```plaintext
 MONGO_URI = <Your mongo uri>
 
 DB = <Your database name>
@@ -510,13 +510,12 @@ PORT = 8080
 APP_ENV = production
 ```
 
-## Extra
+## **Extra**
 
 This is the dataset that I used for this API.
 
 [Movie Catchphrases Dataset](https://www.kaggle.com/thomaskonstantin/150-famous-movie-catchphrases-with-context)
 
+## **Thanks for reading**
 
-## Thanks for reading
-
-This is a very basic example of a REST API built with Fiber (Go) and MongoDB. The code can be downloaded from [Github](https://github.com/MikeFMeyer/catchphrase-go-mongodb-rest-api).
+This is a very basic example of a REST API built with Fiber (Go) and MongoDB. The code can be downloaded from [GitHub](https://github.com/MikeFMeyer/catchphrase-go-mongodb-rest-api).
