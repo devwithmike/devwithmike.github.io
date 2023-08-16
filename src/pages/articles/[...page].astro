@@ -19,38 +19,42 @@ const { page } = Astro.props;
 ---
 
 <MainLayout title='Articles with Mike'>
-	<header class='max-w-2xl'>
-		<h1
-			class='text-4xl font-bold tracking-tight text-zinc-800 dark:text-zinc-100 sm:text-5xl'
-		>
-			Writing on software design and building things.
-		</h1><p class='mt-6 text-base text-zinc-600 dark:text-zinc-400'>
-			All of my long-form thoughts on programming and more, collected in
-			chronological order.
-		</p>
-	</header><div class='mt-16 sm:mt-20'>
-		<div
-			class='md:border-l md:border-zinc-100 md:pl-6 md:dark:border-zinc-700/40'
-		>
-			<div class='flex max-w-3xl flex-col space-y-16'>
-				{
-					page.data.map(({ data }) => {
-						return (
-							<Post
-								post={data}
-								link={`/articles/${slugify(data)}`}
-							/>
-						);
-					})
-				}
-			</div>
-		</div>
-		{
-			(page.url.prev || page.url.next) && (
-				<div class='mt-10 float-right text-zinc-800 dark:text-zinc-200'>
-					<Pagination prevUrl={page.url.prev} nextUrl={page.url.next} />
+	<div class="max-w-3xl mx-auto">
+
+		<header class='max-w-2xl'>
+			<h1
+				class='text-4xl font-bold tracking-tight text-zinc-800 dark:text-zinc-100 sm:text-5xl'
+			>
+				Writing on software design and building things.
+			</h1><p class='mt-6 text-base text-zinc-600 dark:text-zinc-400'>
+				All of my long-form thoughts on programming and more, collected in
+				chronological order.
+			</p>
+		</header>
+		<div class='mt-16 sm:mt-20'>
+			<div
+				class='md:border-l md:border-zinc-100 md:pl-6 md:dark:border-zinc-700/40'
+			>
+				<div class='flex max-w-3xl flex-col space-y-16'>
+					{
+						page.data.map(({ data }) => {
+							return (
+								<Post
+									post={data}
+									link={`/articles/${slugify(data)}`}
+								/>
+							);
+						})
+					}
 				</div>
-			)
-		}
+			</div>
+			{
+				(page.url.prev || page.url.next) && (
+					<div class='mt-10 float-right text-zinc-800 dark:text-zinc-200'>
+						<Pagination prevUrl={page.url.prev} nextUrl={page.url.next} />
+					</div>
+				)
+			}
+		</div>
 	</div>
 </MainLayout>

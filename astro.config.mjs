@@ -8,6 +8,9 @@ import partytown from "@astrojs/partytown";
 
 // https://astro.build/config
 export default defineConfig({
+	redirects: {
+    '/': '/articles'
+  },
   site: 'https://withmike.co',
   integrations: [tailwind(), mdx(), sitemap(), image({
     serviceEntryPoint: '@astrojs/image/sharp'
