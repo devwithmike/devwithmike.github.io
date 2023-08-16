@@ -11,4 +11,9 @@ import Seo from '../components/Seo.astro';
 	<title>{title}</title>
 	<meta name='description' content={description} />
 	<Seo {title} {description} url={Astro.url} {image} {frontmatter} {robots} />
+
+	<script is:inline>
+    const theme = localStorage.getItem('theme');
+    document.querySelector("html").className = theme;
+  </script>
 </head>
