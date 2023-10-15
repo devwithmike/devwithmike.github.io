@@ -1,7 +1,7 @@
 const footerLinks = [
 	{
 		icon: "mdi:github",
-		path: "https://github.com/MikeFMeyer"
+		path: "https://github.com/devwithmike"
 	},
 	{
 		icon: "mdi:linkedin",
@@ -9,19 +9,19 @@ const footerLinks = [
 	},
 	{
 		icon: "ic:baseline-logo-dev",
-		path: "https://dev.to/mikefmeyer"
+		path: "https://dev.to/devwithmike"
 	},
 	{
 		icon: "bi:medium",
-		path: "https://medium.com/@mikefmeyer"
+		path: "https://medium.com/@devwithmike"
 	},
 	{
 		icon: "simple-icons:hashnode",
-		path: "https://mikefmeyer.hashnode.dev/"
+		path: "https://devwithmike.hashnode.dev/"
 	},
 	{
 		icon: "simple-icons:hackernoon",
-		path: "https://hackernoon.com/u/mikefmeyer"
+		path: "https://hackernoon.com/u/devwithmike"
 	},
 ]
 
