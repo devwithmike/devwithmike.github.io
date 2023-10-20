@@ -1,8 +1,8 @@
 const navLinks = [
-	// {
-	// 	name: "Home",
-	// 	path: "/"
-	// },
+	{
+		name: "Home",
+		path: "/"
+	},
 	{
 		name: "Articles",
 		path: "/articles"
@@ -11,10 +11,6 @@ const navLinks = [
 		name: "About",
 		path: "/about"
 	},
-	// {
-	// 	name: "Projects",
-	// 	path: "/projects/"
-	// }
 ]
 
 export default navLinks

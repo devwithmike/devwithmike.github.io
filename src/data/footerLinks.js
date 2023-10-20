@@ -19,10 +19,6 @@ const footerLinks = [
 		icon: "simple-icons:hashnode",
 		path: "https://devwithmike.hashnode.dev/"
 	},
-	{
-		icon: "simple-icons:hackernoon",
-		path: "https://hackernoon.com/u/devwithmike"
-	},
 ]
 
 export default footerLinks
