@@ -1,13 +1,13 @@
 /* CURRENT NAV ITEM HIGHLIGHTED */
 [data-navlink][aria-current="page"] {
-	@apply text-teal-500 dark:text-teal-400;
+	@apply text-prime dark:text-prime;
 }
 
 /* COPY CODE BUTTON */
 .copy-code {
-	@apply absolute top-0 right-0 bg-teal-500 py-1 px-2 text-xs rounded-md text-zinc-950;
+	@apply absolute top-0 right-0 bg-prime py-1 px-2 text-xs rounded-md text-zinc-950;
 }
 
 .copy-code:hover {
-	@apply bg-teal-400;
+	@apply bg-prime;
 }

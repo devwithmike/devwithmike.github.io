@@ -17,10 +17,10 @@ import Link from './Link.astro';
 							>
 								{
 									footerLinks.map((item) => (
-										<Link href={item.path} text="" icon={{ name: item.icon, side: "left" }} classes="transition hover:text-teal-500 dark:hover:text-teal-400" />
+										<Link href={item.path} text="" icon={{ name: item.icon, side: "left" }} aria-label={ item.ariaLabel } classes="transition hover:text-prime" />
 									))
 								}
-							</div><p class='text-sm text-zinc-400 dark:text-zinc-500'>
+							</div><p class='text-sm text-zinc-800 dark:text-zinc-200'>
 								© <!-- --><span id="date"></span><!-- --> Mike Meyer. All rights reserved.
 							</p>
 						</div>

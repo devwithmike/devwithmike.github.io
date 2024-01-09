@@ -55,7 +55,7 @@ import Link from './Link.astro';
 													><svg
 														viewBox='0 0 24 24'
 														aria-hidden='true'
-														class='h-6 w-6 text-zinc-500 dark:text-zinc-400'
+														class='h-6 w-6 text-zinc-800 dark:text-zinc-200'
 														><path
 															d='m17.25 6.75-10.5 10.5M6.75 6.75l10.5 10.5'
 															fill='none'
@@ -65,13 +65,13 @@ import Link from './Link.astro';
 															stroke-linejoin='round'></path></svg
 													></button
 												><h2
-													class='text-sm font-medium text-zinc-600 dark:text-zinc-400'
+													class='text-sm font-medium text-zinc-800 dark:text-zinc-200'
 												>
 													Navigation
 												</h2>
 											</div><nav class='mt-6'>
 												<ul
-													class='-my-2 divide-y divide-zinc-100 text-base text-zinc-800 dark:divide-zinc-100/5 dark:text-zinc-300'
+													class='-my-2 divide-y divide-zinc-100 text-base text-zinc-800 dark:divide-zinc-100/5 dark:text-zinc-200'
 												>
 													{
 														navLinks.map((item) => (
@@ -91,14 +91,14 @@ import Link from './Link.astro';
 									</div>
 								</div>
 								<nav class='pointer-events-auto hidden md:block'>
-									<ul class='flex text-sm font-medium text-zinc-500'>
+									<ul class='flex text-sm font-medium text-zinc-800 dark:text-zinc-200'>
 										{
 											navLinks.map((item) => (
 												<li>
 													<Link
 														href={item.path}
 														text={item.name}
-														classes='relative block px-3 py-2 transition hover:text-teal-500 dark:hover:text-teal-400'
+														classes='relative block px-3 py-2 transition hover:text-prime'
 														data-navLink
 													/>
 												</li>
@@ -117,11 +117,11 @@ import Link from './Link.astro';
 									>
 										<Icon
 											name='ph:moon-stars'
-											class='hidden h-6 w-6 text-zinc-800 dark:text-zinc-200 transition dark:block hover:text-teal-500'
+											class='hidden h-6 w-6 text-zinc-800 dark:text-zinc-200 transition dark:block hover:text-prime'
 										/>
 										<Icon
 											name='ph:sun'
-											class='dark:hidden h-6 w-6 text-zinc-800 dark:text-zinc-200 transition hover:text-teal-500'
+											class='dark:hidden h-6 w-6 text-zinc-800 dark:text-zinc-200 transition hover:text-prime'
 										/>
 									</button>
 								</div>
