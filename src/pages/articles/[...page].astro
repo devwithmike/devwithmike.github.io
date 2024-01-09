@@ -1,9 +1,9 @@
 ---
-import Pagination from '../../components/Pagination.astro';
-import Post from '../../components/Post.astro';
-import MainLayout from '../../layouts/MainLayout.astro';
-import getSortedPosts from '../../utils/getSortedPosts';
-import slugify from '../../utils/slugify';
+import Pagination from '@/components/Pagination.astro';
+import Post from '@/components/Post.astro';
+import MainLayout from '@/layouts/MainLayout.astro';
+import getSortedPosts from '@/utils/getSortedPosts';
+import slugify from '@/utils/slugify';
 import { getCollection } from 'astro:content';
 
 export async function getStaticPaths({ paginate }) {
@@ -35,7 +35,7 @@ const { page } = Astro.props;
 			<div
 				class='md:border-l md:border-zinc-100 md:pl-6 md:dark:border-zinc-700/40'
 			>
-				<div class='flex max-w-3xl flex-col space-y-16'>
+				<div class='flex flex-col max-w-3xl space-y-16'>
 					{
 						page.data.map(({ data }) => {
 							return (
@@ -50,7 +50,7 @@ const { page } = Astro.props;
 			</div>
 			{
 				(page.url.prev || page.url.next) && (
-					<div class='mt-10 float-right text-zinc-800 dark:text-zinc-200'>
+					<div class='float-right mt-10 text-zinc-800 dark:text-zinc-200'>
 						<Pagination prevUrl={page.url.prev} nextUrl={page.url.next} />
 					</div>
 				)

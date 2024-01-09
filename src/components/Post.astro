@@ -1,6 +1,6 @@
 ---
 import { type CollectionEntry } from 'astro:content';
-import formatDatetime from '../utils/formatDatetime';
+import formatDatetime from '@/utils/formatDatetime';
 
 interface Props {
 	post: CollectionEntry<"articles">,
@@ -12,17 +12,17 @@ const { title, datetime, description } = post;
 ---
 
 <article class='md:grid md:grid-cols-4 md:items-baseline'>
-	<div class='md:col-span-3 group relative flex flex-col items-start'>
+	<div class='relative flex flex-col items-start md:col-span-3 group'>
 		<h2
 			class='text-base font-semibold tracking-tight text-zinc-800 dark:text-zinc-100'
 		>
 			<div
-				class='absolute -inset-x-4 -inset-y-6 z-0 scale-95 bg-zinc-50 opacity-0 transition group-hover:scale-100 group-hover:opacity-100 dark:bg-zinc-800/50 sm:-inset-x-6 sm:rounded-2xl'
+				class='absolute z-0 transition scale-95 opacity-0 -inset-x-4 -inset-y-6 bg-zinc-50 group-hover:scale-100 group-hover:opacity-100 dark:bg-zinc-800/50 sm:-inset-x-6 sm:rounded-2xl'
 			>
 			</div><a
 				href={link}
 				><span
-					class='absolute -inset-x-4 -inset-y-6 z-20 sm:-inset-x-6 sm:rounded-2xl'
+					class='absolute z-20 -inset-x-4 -inset-y-6 sm:-inset-x-6 sm:rounded-2xl'
 				></span><span class='relative z-10'
 					>{ title }</span
 				></a
@@ -40,13 +40,13 @@ const { title, datetime, description } = post;
 			{description}
 		</p><div
 			aria-hidden='true'
-			class='relative z-10 mt-4 flex items-center text-sm font-medium text-prime'
+			class='relative z-10 flex items-center mt-4 text-sm font-medium text-prime'
 		>
 			Read article<svg
 				viewBox='0 0 16 16'
 				fill='none'
 				aria-hidden='true'
-				class='ml-1 h-4 w-4 stroke-current'
+				class='w-4 h-4 ml-1 stroke-current'
 				><path
 					d='M6.75 5.75 9.25 8l-2.5 2.25'
 					stroke-width='1.5'
@@ -56,7 +56,7 @@ const { title, datetime, description } = post;
 		</div>
 	</div>
 	<time
-		class='mt-1 hidden md:flex relative z-10 order-first mb-3 items-center text-sm text-zinc-400 dark:text-zinc-500'
+		class='relative z-10 items-center order-first hidden mt-1 mb-3 text-sm md:flex text-zinc-400 dark:text-zinc-500'
 		datetime='2022-09-05'>{formatDatetime(datetime.toString())}</time
 	>
 </article>

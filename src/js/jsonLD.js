@@ -1,4 +1,4 @@
-import siteData from "../data/siteData.json"
+import siteData from "@/data/siteData.json"
 
 
 export default function jsonLDGenerator({ type, post, url }) {
