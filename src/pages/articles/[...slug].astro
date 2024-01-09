@@ -22,7 +22,7 @@ export async function getStaticPaths() {
 	let postResult: PostResult = posts.map((post) => {
 		return {
 			params: {
-				slug: slugify(post.slug),
+				slug: slugify(post.data),
 			},
 			props: {
 				post,
