@@ -1,4 +1,5 @@
 ---
+import '@/styles/global.css';
 import siteData from "@/data/siteData.json";
 import jsonLDGenerator from "@/js/jsonLD";
 
@@ -7,9 +8,10 @@ const {
   description,
   url = Astro.url,
   image,
-  frontmatter,
-  robots,
+  frontmatter
 } = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
 const jsonLD = jsonLDGenerator({
   type: frontmatter ? "post" : "website",
@@ -19,7 +21,7 @@ const jsonLD = jsonLDGenerator({
 ---
 
 <!-- SEO -->
-<link rel="canonical" href={url} />
+<link rel="canonical" href={canonicalURL} />
 
 <!-- Open Graph -->
 <meta property="og:site_name" content="With Mike" />
@@ -45,7 +47,7 @@ const jsonLD = jsonLDGenerator({
 <meta name="twitter:image:alt" content={title} />
 <meta name="twitter:domain" content={import.meta.env.SITE} />
 
-{robots && <meta name="robots" content="noindex, nofollow" />}
+<!-- {robots && <meta name="robots" content="noindex, nofollow" />} -->
 
 <!-- JSON LD -->
 <Fragment set:html={jsonLD} />

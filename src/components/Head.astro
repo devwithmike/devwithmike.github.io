@@ -1,5 +1,5 @@
 ---
-const { title, description, image, frontmatter, robots } = Astro.props;
+const { title, description, image, frontmatter } = Astro.props;
 import Seo from '@/components/Seo.astro';
 ---
 
@@ -10,5 +10,5 @@ import Seo from '@/components/Seo.astro';
 	<link href='/favicon.png' rel='icon' />
 	<title>{title}</title>
 	<meta name='description' content={description} />
-	<Seo {title} {description} url={Astro.url} {image} {frontmatter} {robots} />
+	<Seo {title} {description} url={Astro.url} {image} {frontmatter}/>
 </head>
