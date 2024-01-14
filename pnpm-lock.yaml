@@ -1,5 +1,9 @@
 lockfileVersion: '6.0'
 
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
 dependencies:
   '@astrojs/check':
     specifier: ^0.4.1
@@ -7,9 +11,6 @@ dependencies:
   '@astrojs/mdx':
     specifier: ^2.0.3
     version: 2.0.3(astro@4.1.1)
-  '@astrojs/partytown':
-    specifier: ^2.0.3
-    version: 2.0.3
   '@astrojs/rss':
     specifier: ^4.0.1
     version: 4.0.1
@@ -19,21 +20,6 @@ dependencies:
   '@astrojs/tailwind':
     specifier: ^5.1.0
     version: 5.1.0(astro@4.1.1)(tailwindcss@3.4.1)
-  '@iconify-json/bi':
-    specifier: ^1.1.23
-    version: 1.1.23
-  '@iconify-json/ic':
-    specifier: ^1.1.17
-    version: 1.1.17
-  '@iconify-json/mdi':
-    specifier: ^1.1.64
-    version: 1.1.64
-  '@iconify-json/ph':
-    specifier: ^1.1.9
-    version: 1.1.9
-  '@iconify-json/simple-icons':
-    specifier: ^1.1.87
-    version: 1.1.87
   astro:
     specifier: ^4.1.1
     version: 4.1.1(typescript@5.3.3)
@@ -57,6 +43,24 @@ dependencies:
     version: 5.3.3
 
 devDependencies:
+  '@iconify-json/bi':
+    specifier: ^1.1.23
+    version: 1.1.23
+  '@iconify-json/ic':
+    specifier: ^1.1.17
+    version: 1.1.17
+  '@iconify-json/mdi':
+    specifier: ^1.1.64
+    version: 1.1.64
+  '@iconify-json/ph':
+    specifier: ^1.1.10
+    version: 1.1.10
+  '@iconify-json/simple-icons':
+    specifier: ^1.1.87
+    version: 1.1.87
+  '@iconify-json/tabler':
+    specifier: ^1.1.103
+    version: 1.1.103
   '@tailwindcss/typography':
     specifier: ^0.5.10
     version: 0.5.10(tailwindcss@3.4.1)
@@ -195,13 +199,6 @@ packages:
       - supports-color
     dev: false
 
-  /@astrojs/partytown@2.0.3:
-    resolution: {integrity: sha512-N7bQUxr4TQJKFiOnAr2cvvK9OrCWz2PwsTPTnGr9tRn+f3WCQN4jed9BB4yw9WdWcitYc/N2ECW7u09cg93tgg==}
-    dependencies:
-      '@builder.io/partytown': 0.8.1
-      mrmime: 1.0.1
-    dev: false
-
   /@astrojs/prism@3.0.0:
     resolution: {integrity: sha512-g61lZupWq1bYbcBnYZqdjndShr/J3l/oFobBKPA3+qMat146zce3nz2kdO4giGbhYDt4gYdhmoBz0vZJ4sIurQ==}
     engines: {node: '>=18.14.1'}
@@ -212,7 +209,7 @@ packages:
   /@astrojs/rss@4.0.1:
     resolution: {integrity: sha512-fzXWsrAp17atO02OZJETM8e8McRz+dNWzMeO7ENb6xgod2nWj5mH/auPBFs1a9FzMUi1nOQmzSPHO1hxZZpkwQ==}
     dependencies:
-      fast-xml-parser: 4.3.2
+      fast-xml-parser: 4.3.3
       kleur: 4.1.5
     dev: false
 
@@ -480,12 +477,6 @@ packages:
       to-fast-properties: 2.0.0
     dev: false
 
-  /@builder.io/partytown@0.8.1:
-    resolution: {integrity: sha512-p4xhEtQCPe8YFJ8e7KT9RptnT+f4lvtbmXymbp1t0bLp+USkNMTxrRMNc3Dlr2w2fpxyX7uA0CyAeU3ju84O4A==}
-    engines: {node: '>=18.0.0'}
-    hasBin: true
-    dev: false
-
   /@emmetio/abbreviation@2.3.3:
     resolution: {integrity: sha512-mgv58UrU3rh4YgbE/TzgLQwJ3pFsHHhCLqY20aJq+9comytTXUDNGG/SMtSeMJdkpxgXSXunBGLD8Boka3JyVA==}
     dependencies:
@@ -721,31 +712,37 @@ packages:
     resolution: {integrity: sha512-1te+g9ZzI+PU1Lv6Xerd3XPXf4DE6g3TvDL2buIopTAfrauPHyXCHPFQMrzoQVNrVPCpN3rv3vBtJMPyBwJ9IA==}
     dependencies:
       '@iconify/types': 2.0.0
-    dev: false
+    dev: true
 
   /@iconify-json/ic@1.1.17:
     resolution: {integrity: sha512-EvAjZzVESmN36zlyefylePUNaU2BQ3eRKVZ6KQSQ2bG01ppoZaiFZRri74VTyvp5Mlv2yn68ux1fgCoT+etGmA==}
     dependencies:
       '@iconify/types': 2.0.0
-    dev: false
+    dev: true
 
   /@iconify-json/mdi@1.1.64:
     resolution: {integrity: sha512-zGeo5TjhNFAY6FmSDBLAzDO811t77r6v/mDi7CAL9w5eXqKez6bIjk8R9AL/RHIeq44ALP4Ozr4lMqFTkHr7ug==}
     dependencies:
       '@iconify/types': 2.0.0
-    dev: false
+    dev: true
 
-  /@iconify-json/ph@1.1.9:
-    resolution: {integrity: sha512-LcKe7rSp4zm1Rpafsv03DVdta65ePmPMH7IHLErD8nFLL2jNAtt/8CUAJWbaqYztE3V4wEg21az09Ur6yo9CXw==}
+  /@iconify-json/ph@1.1.10:
+    resolution: {integrity: sha512-e7owJfx9BgnUVGXKk/243iFV4tHH1UiBDl5mWYkwKoPf4nN2rzPGdD7ISfvwr3SB25VvOteSC5DOVWxjs56Ywg==}
     dependencies:
       '@iconify/types': 2.0.0
-    dev: false
+    dev: true
 
   /@iconify-json/simple-icons@1.1.87:
     resolution: {integrity: sha512-DNAWoLDgboIGVoqZBPWM25MPKdIjGnNgZYEBqrWcoPkaYF0q1jZEzTyC2y8yCOTTSrcSjhASk9CrMK+INfpnwQ==}
     dependencies:
       '@iconify/types': 2.0.0
-    dev: false
+    dev: true
+
+  /@iconify-json/tabler@1.1.103:
+    resolution: {integrity: sha512-8lCzy0GP4sjhRfFQO2nubytMb1OsEItjJ75ts/cOBPuj6bs9Wwq/Pxycz3DWg7cemTOVxiOyG1lednlhMy4DLg==}
+    dependencies:
+      '@iconify/types': 2.0.0
+    dev: true
 
   /@iconify/tools@3.0.7:
     resolution: {integrity: sha512-DxfhFLMnooS34dHelpGUnnYrxLZHs0czC1CgrBhAbuL8ddVzBb2VEQm8kh9qGh7A34qeXAB5iSHH3A72rAaFrg==}
@@ -757,7 +754,7 @@ packages:
       cheerio: 1.0.0-rc.12
       extract-zip: 2.0.1
       local-pkg: 0.4.3
-      pathe: 1.1.1
+      pathe: 1.1.2
       svgo: 3.0.3
       tar: 6.2.0
     transitivePeerDependencies:
@@ -766,7 +763,6 @@ packages:
 
   /@iconify/types@2.0.0:
     resolution: {integrity: sha512-+wluvCrRhXrhyOmRDJ3q8mux9JkKy5SJ/v8ol2tu4FVjyYvtEzkc/3pK15ET6RKg4b4w4BmTk1+gsCUhf21Ykg==}
-    dev: false
 
   /@iconify/utils@2.1.14:
     resolution: {integrity: sha512-9pKIntkbLbjVVFxH32td21Am3AGGJfyI2KY2d8yDQxkZe4BBZtufJI8NgcamFn8B5QKLU9ai2VMo8OEov8jAtw==}
@@ -1635,7 +1631,7 @@ packages:
     hasBin: true
     dependencies:
       caniuse-lite: 1.0.30001576
-      electron-to-chromium: 1.4.625
+      electron-to-chromium: 1.4.626
       node-releases: 2.0.14
       update-browserslist-db: 1.0.13(browserslist@4.22.2)
     dev: false
@@ -2019,8 +2015,8 @@ packages:
   /eastasianwidth@0.2.0:
     resolution: {integrity: sha512-I88TYZWc9XiYHRQ4/3c5rjjfgkjhLyW2luGIheGERbNQ6OY7yTybanSpDXZa8y7VUP9YmDcYa+eyq4ca7iLqWA==}
 
-  /electron-to-chromium@1.4.625:
-    resolution: {integrity: sha512-DENMhh3MFgaPDoXWrVIqSPInQoLImywfCwrSmVl3cf9QHzoZSiutHwGaB/Ql3VkqcQV30rzgdM+BjKqBAJxo5Q==}
+  /electron-to-chromium@1.4.626:
+    resolution: {integrity: sha512-f7/be56VjRRQk+Ric6PmIrEtPcIqsn3tElyAu9Sh6egha2VLJ82qwkcOdcnT06W+Pb6RUulV1ckzrGbKzVcTHg==}
     dev: false
 
   /emmet@2.4.6:
@@ -2220,8 +2216,8 @@ packages:
       merge2: 1.4.1
       micromatch: 4.0.5
 
-  /fast-xml-parser@4.3.2:
-    resolution: {integrity: sha512-rmrXUXwbJedoXkStenj1kkljNF7ugn5ZjR9FJcwmCfcCbtOMDghPajbc+Tck6vE6F5XsDmx+Pr2le9fw8+pXBg==}
+  /fast-xml-parser@4.3.3:
+    resolution: {integrity: sha512-coV/D1MhrShMvU6D0I+VAK3umz6hUaxxhL0yp/9RjfiYUfAv14rDhGQL+PLForhMdr0wq3PiV07WtkkNjJjNHg==}
     hasBin: true
     dependencies:
       strnum: 1.0.5
@@ -3508,11 +3504,6 @@ packages:
     hasBin: true
     dev: false
 
-  /mrmime@1.0.1:
-    resolution: {integrity: sha512-hzzEagAgDyoU1Q6yg5uI+AorQgdvMCur3FcKf7NhMKWsaYg+RnbTyHRa/9IlLF9rf455MOCtcqqrQQ83pPP7Uw==}
-    engines: {node: '>=10'}
-    dev: false
-
   /ms@2.0.0:
     resolution: {integrity: sha512-Tpp60P6IUJDTuOq/5Z8cdskzJujfwqfOTkrwIwj7IRISpnkJnT6SyJ4PCPnGMoFjC9ddhal5KVIYtAt97ix05A==}
     dev: false
@@ -3758,8 +3749,8 @@ packages:
     resolution: {integrity: sha512-JLyh7xT1kizaEvcaXOQwOc2/Yhw6KZOvPf1S8401UyLk86CU79LN3vl7ztXGm/pZ+YjoyAJ4rxmHwbkBXJX+yw==}
     dev: false
 
-  /pathe@1.1.1:
-    resolution: {integrity: sha512-d+RQGp0MAYTIaDBIMmOfMwz3E+LOZnxx1HZd5R18mmCZY0QBlK0LDZfPc8FW8Ed2DlvsuE6PRjroDY+wg4+j/Q==}
+  /pathe@1.1.2:
+    resolution: {integrity: sha512-whLdWMYL2TwI08hn8/ZqAbrVemu0LNaNNJZX73O6qaIdCTfXutsLhMkjdENX0qhsQ9uIimo4/aQOmXkoon2nDQ==}
     dev: false
 
   /pend@1.2.0:

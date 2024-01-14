@@ -5,7 +5,7 @@
 
 /* COPY CODE BUTTON */
 .copy-code {
-	@apply absolute top-0 right-0 bg-prime py-1 px-2 text-xs rounded-md text-zinc-950;
+	@apply absolute top-0 right-0 px-2 py-1 text-xs rounded-md bg-prime text-zinc-950;
 }
 
 .copy-code:hover {

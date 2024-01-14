@@ -1,9 +1,9 @@
 ---
-import { type CollectionEntry } from 'astro:content';
 import formatDatetime from '@/utils/formatDatetime';
+import type { Frontmatter } from '@/types';
 
 interface Props {
-	post: CollectionEntry<"articles">,
+	post: Frontmatter,
 	link: string
 }
 
@@ -35,7 +35,7 @@ const { title, datetime, description } = post;
 				aria-hidden='true'
 				><span class='h-4 w-0.5 rounded-full bg-zinc-200 dark:bg-zinc-500'
 				></span></span
-			>{formatDatetime(datetime.toString())}</time
+			>{formatDatetime(datetime)}</time
 		><p class='relative z-10 mt-2 text-sm text-zinc-600 dark:text-zinc-400'>
 			{description}
 		</p><div
@@ -57,6 +57,6 @@ const { title, datetime, description } = post;
 	</div>
 	<time
 		class='relative z-10 items-center order-first hidden mt-1 mb-3 text-sm md:flex text-zinc-600 dark:text-zinc-400'
-		datetime='2022-09-05'>{formatDatetime(datetime.toString())}</time
+		datetime='2022-09-05'>{formatDatetime(datetime)}</time
 	>
 </article>

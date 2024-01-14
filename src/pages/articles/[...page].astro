@@ -1,24 +1,23 @@
 ---
-import Pagination from '@/components/Pagination.astro';
-import Post from '@/components/Post.astro';
-import MainLayout from '@/layouts/MainLayout.astro';
-import getSortedPosts from '@/utils/getSortedPosts';
-import slugify from '@/utils/slugify';
 import { getCollection } from 'astro:content';
+import getSortedPosts from '@/utils/getSortedPosts';
+import Main from '@/layouts/Main.astro';
+import Post from '@/components/Post.astro';
+import Pagination from '@/components/Pagination.astro';
 
 export async function getStaticPaths({ paginate }) {
 	const postCollection = await getCollection('articles');
 	const posts = getSortedPosts(postCollection);
 
 	return paginate(posts, {
-		pageSize: 3,
+		pageSize: 4,
 	});
 }
 
 const { page } = Astro.props;
 ---
 
-<MainLayout title='Articles with Mike'>
+<Main title='Articles with Mike'>
 	<div class="max-w-3xl mx-auto">
 
 		<header class='max-w-2xl'>
@@ -37,11 +36,11 @@ const { page } = Astro.props;
 			>
 				<div class='flex flex-col max-w-3xl space-y-16'>
 					{
-						page.data.map(({ data }) => {
+						page.data.map((post) => {
 							return (
 								<Post
-									post={data}
-									link={`/articles/${slugify(data)}`}
+									post={post.data}
+									link={`/articles/${post.slug}`}
 								/>
 							);
 						})
@@ -57,4 +56,4 @@ const { page } = Astro.props;
 			}
 		</div>
 	</div>
-</MainLayout>
+</Main>
