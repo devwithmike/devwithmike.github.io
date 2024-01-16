@@ -3,6 +3,7 @@ import Main from '@/layouts/Main.astro';
 import formatDatetime from '@/utils/formatDatetime';
 import Tag from '@/components/Tag.astro';
 import { type CollectionEntry, getCollection } from 'astro:content';
+import { Image } from 'astro:assets';
 
 type PostResult = {
 	params: {
@@ -31,12 +32,12 @@ export async function getStaticPaths() {
 }
 
 const { data, render } = Astro.props.post;
-const { title, datetime, tags } = data;
+const { title, datetime, tags, image } = data;
 const { Content } = await render();
 
 ---
 
-<Main frontmatter={data}>
+<Main frontmatter={data} title={title}>
 	<div class='xl:relative'>
 		<div class='max-w-2xl mx-auto'>
 			<a
@@ -60,19 +61,20 @@ const { Content } = await render();
 			</a>
 			<article>
 				<header class='flex flex-col'>
-					<h1
-						class='mt-6 text-4xl font-bold tracking-tight text-zinc-800 dark:text-zinc-100 sm:text-5xl'
-					>
-						{title}
-					</h1>
+					{ image && <Image src={image.src} alt={image.alt} width="1920" height="1080" /> }
 					<time
 						datetime='2022-09-05'
-						class='flex items-center order-first text-base text-zinc-600 dark:text-zinc-400'
+						class='flex items-center mt-6 text-base text-zinc-600 dark:text-zinc-400'
 					>
 						<span class='h-4 w-0.5 rounded-full bg-zinc-200 dark:bg-zinc-500'
 						></span>
 						<span class='ml-3'>{formatDatetime(datetime)}</span>
 					</time>
+					<h1
+						class='mt-6 text-4xl font-bold tracking-tight text-zinc-800 dark:text-zinc-100 sm:text-5xl'
+					>
+						{title}
+					</h1>
 					<ul class='mt-5 text-zinc-600 dark:text-zinc-400'>
 						{tags.map((tag: string) => <Tag name={tag} />)}
 					</ul>
