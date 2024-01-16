@@ -1,15 +1,12 @@
----
-import Link from '@/components/Link.astro';
-import Main from '@/layouts/Main.astro';
----
-
-<Main>
-	<div
-		class='max-w-3xl py-10 mx-auto sm:py-40'
-	>
-		<h1 class='text-4xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100 sm:text-5xl'>
-			Hello there 👋 I'm Dev Mike
-		</h1>
-		<Link href='/articles/' text='Go to Articles' classes='inline-block bg-prime text-zinc-950 rounded px-5 py-2.5 mt-10 md:mt-20 font-semibold' />
-	</div>
-</Main>
+<!doctype html>
+<html lang='en'>
+	<head>
+		<meta charset='UTF-8' />
+		<meta name='viewport' content='width=device-width, initial-scale=1.0' />
+		<title>Dev with Mike</title>
+		<meta http-equiv='refresh' content={`0; url="/articles" }`} />
+	</head>
+	<body class="text-white bg-zinc-900">
+		<p>Redirecting to articles page</p>
+	</body>
+</html>

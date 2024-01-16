@@ -1,9 +1,5 @@
 const navLinks = [
 	{
-		name: "Home",
-		path: "/"
-	},
-	{
 		name: "Articles",
 		path: "/articles"
 	},

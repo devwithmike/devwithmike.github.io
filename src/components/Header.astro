@@ -13,118 +13,119 @@ import Link from './Link.astro';
 			<div class='sm:px-8'>
 				<div class='max-w-5xl mx-auto lg:px-8'>
 					<div class='relative px-4 sm:px-8 lg:px-12'>
-						<div class='relative flex justify-between'>
-							<div class='flex'>
-								<div class='pointer-events-auto md:hidden'>
-									<button
-										class='flex items-center px-4 py-2 text-sm font-medium group text-zinc-800 dark:text-zinc-200'
-										type='button'
-										aria-expanded='true'
-										id='mobileMenuBtn'
-										>Menu<svg
-											viewBox='0 0 8 6'
-											aria-hidden='true'
-											class='w-2 h-auto ml-3 stroke-zinc-500 group-hover:stroke-zinc-700 dark:group-hover:stroke-zinc-400'
-											><path
-												d='M1.75 1.75 4 4.25l2.25-2.5'
-												fill='none'
-												stroke-width='1.5'
-												stroke-linecap='round'
-												stroke-linejoin='round'></path></svg
-										></button
-									><div>
-										<div
-											class='fixed inset-0 z-50 hidden opacity-100 bg-zinc-800/40 backdrop-blur-sm dark:bg-black/80'
-											aria-hidden='true'
-											id='mobileMenuBlur'
-										>
-										</div><div
-											class='fixed z-50 hidden p-8 origin-top scale-100 bg-white opacity-100 inset-x-4 top-8 rounded-3xl ring-1 ring-zinc-900/5 dark:bg-zinc-900 dark:ring-zinc-800'
-											id='mobileMenu'
-											tabindex='-1'
-										>
+						<div class='relative flex items-center justify-between'>
+							<a href="/articles" class="mr-6 text-xl font-semibold text-zinc-800 dark:text-zinc-200"><span class="text-prime">dev</span>withmike</a>
+							<div>
+								<div class='flex items-center'>
+									<div class='pointer-events-auto md:hidden'>
+										<button
+											class='flex items-center px-4 py-2 text-sm font-medium group text-zinc-800 dark:text-zinc-200'
+											type='button'
+											aria-expanded='true'
+											id='mobileMenuBtn'
+											>Menu<svg
+												viewBox='0 0 8 6'
+												aria-hidden='true'
+												class='w-2 h-auto ml-3 stroke-zinc-500 group-hover:stroke-zinc-700 dark:group-hover:stroke-zinc-400'
+												><path
+													d='M1.75 1.75 4 4.25l2.25-2.5'
+													fill='none'
+													stroke-width='1.5'
+													stroke-linecap='round'
+													stroke-linejoin='round'></path></svg
+											></button
+										><div>
 											<div
-												class='flex flex-row-reverse items-center justify-between'
+												class='fixed inset-0 z-50 hidden opacity-100 bg-zinc-800/40 backdrop-blur-sm dark:bg-black/80'
+												aria-hidden='true'
+												id='mobileMenuBlur'
 											>
-												<button
-													aria-label='Close menu'
-													class='p-1 -m-1'
-													type='button'
-													tabindex='0'
-													id='mobileMenuClose'
-													><svg
-														viewBox='0 0 24 24'
-														aria-hidden='true'
-														class='w-6 h-6 text-zinc-800 dark:text-zinc-200'
-														><path
-															d='m17.25 6.75-10.5 10.5M6.75 6.75l10.5 10.5'
-															fill='none'
-															stroke='currentColor'
-															stroke-width='1.5'
-															stroke-linecap='round'
-															stroke-linejoin='round'></path></svg
-													></button
-												><h2
-													class='text-sm font-medium text-zinc-800 dark:text-zinc-200'
+											</div><div
+												class='fixed z-50 hidden p-8 origin-top scale-100 bg-white opacity-100 inset-x-4 top-8 rounded-3xl ring-1 ring-zinc-900/5 dark:bg-zinc-900 dark:ring-zinc-800'
+												id='mobileMenu'
+												tabindex='-1'
+											>
+												<div
+													class='flex flex-row-reverse items-center justify-between'
 												>
-													Navigation
-												</h2>
-											</div><nav class='mt-6'>
-												<ul
-													class='-my-2 text-base divide-y divide-zinc-100 text-zinc-800 dark:divide-zinc-100/5 dark:text-zinc-200'
-												>
-													{
-														navLinks.map((item) => (
-															<li>
-																<Link
-																	href={item.path}
-																	text={item.name}
-																	classes='block py-2'
-																	data-navLink
-																/>
-															</li>
-														))
-													}
-												</ul>
-											</nav>
+													<button
+														aria-label='Close menu'
+														class='p-1 -m-1'
+														type='button'
+														tabindex='0'
+														id='mobileMenuClose'
+														><svg
+															viewBox='0 0 24 24'
+															aria-hidden='true'
+															class='w-6 h-6 text-zinc-800 dark:text-zinc-200'
+															><path
+																d='m17.25 6.75-10.5 10.5M6.75 6.75l10.5 10.5'
+																fill='none'
+																stroke='currentColor'
+																stroke-width='1.5'
+																stroke-linecap='round'
+																stroke-linejoin='round'></path></svg
+														></button
+													><h2
+														class='text-sm font-medium text-zinc-800 dark:text-zinc-200'
+													>
+														Navigation
+													</h2>
+												</div><nav class='mt-6'>
+													<ul
+														class='-my-2 text-base divide-y divide-zinc-100 text-zinc-800 dark:divide-zinc-100/5 dark:text-zinc-200'
+													>
+														{
+															navLinks.map((item) => (
+																<li>
+																	<Link
+																		href={item.path}
+																		text={item.name}
+																		classes='block py-2'
+																		data-navLink
+																	/>
+																</li>
+															))
+														}
+													</ul>
+												</nav>
+											</div>
 										</div>
 									</div>
-								</div>
-								<nav class='hidden pointer-events-auto md:block'>
-									<ul class='flex text-sm font-medium text-zinc-800 dark:text-zinc-200'>
-										{
-											navLinks.map((item) => (
-												<li>
-													<Link
-														href={item.path}
-														text={item.name}
-														classes='relative block px-3 py-2 transition hover:text-prime'
-														data-navLink
-													/>
-												</li>
-											))
-										}
-									</ul>
-								</nav>
+									<nav class='hidden pointer-events-auto md:block'>
+										<ul class='flex text-sm font-medium text-zinc-800 dark:text-zinc-200'>
+											{
+												navLinks.map((item) => (
+													<li>
+														<Link
+															href={item.path}
+															text={item.name}
+															classes='relative block px-3 py-2 transition hover:text-prime'
+															data-navLink
+														/>
+													</li>
+												))
+											}
+										</ul>
+									</nav>
+									<div class='pointer-events-auto'>
+										<button
+											type='button'
+											id='toggleDark'
+											aria-label='Toggle dark mode'
+											class='px-3 py-2 rounded-full group'
+										>
+											<Icon
+												name='ph:moon-stars'
+												class='hidden text-2xl transition text-zinc-800 dark:text-zinc-200 dark:block hover:text-prime'
+											/>
+											<Icon
+												name='ph:sun'
+												class='text-2xl transition dark:hidden text-zinc-800 dark:text-zinc-200 hover:text-prime'
+											/>
+										</button>
+									</div>
 							</div>
-							<div class='flex justify-end'>
-								<div class='pointer-events-auto'>
-									<button
-										type='button'
-										id='toggleDark'
-										aria-label='Toggle dark mode'
-										class='px-3 py-2 rounded-full group'
-									>
-										<Icon
-											name='ph:moon-stars'
-											class='hidden text-2xl transition text-zinc-800 dark:text-zinc-200 dark:block hover:text-prime'
-										/>
-										<Icon
-											name='ph:sun'
-											class='text-2xl transition dark:hidden text-zinc-800 dark:text-zinc-200 hover:text-prime'
-										/>
-									</button>
-								</div>
 							</div>
 						</div>
 					</div>
