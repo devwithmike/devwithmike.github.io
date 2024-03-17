@@ -1,20 +1,3 @@
-const navLinks = document.querySelectorAll("[data-navLink]")
-
-navLinks.forEach((link) => {
-	console.log(window.location.pathname)
-	if (window.location.pathname == "/" && link.pathname == "/") {
-		link.setAttribute("aria-current", "page")
-	} else {
-		const routes = window.location.pathname.split("/")
-		if (routes[1]) {
-			if (link.getAttribute("href").includes(routes[1])) {
-				link.setAttribute("aria-current", "page")
-			}
-		}
-	}
-})
-
-
 const toggleDark = document.querySelector("#toggleDark")
 
 toggleDark.addEventListener("click", (e) => {
