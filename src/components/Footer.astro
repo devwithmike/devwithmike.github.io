@@ -17,7 +17,7 @@ import Link from './Link.astro';
 							>
 								{
 									footerLinks.map((item) => (
-										<Link href={item.path} text=" " icon={{ name: item.icon, side: "left" }} aria-label={ item.ariaLabel } classes="transition hover:text-prime" />
+										<Link href={item.path} text=" " icon={{ name: item.icon, side: "left" }} aria-label={ item.ariaLabel } classes="transition" />
 									))
 								}
 							</div><p class='text-sm text-zinc-800 dark:text-zinc-200'>

@@ -14,7 +14,7 @@ import Link from './Link.astro';
 				<div class='max-w-5xl mx-auto lg:px-8'>
 					<div class='relative px-4 sm:px-8 lg:px-12'>
 						<div class='relative flex items-center justify-between'>
-							<a href="/articles" class="mr-6 text-xl font-semibold text-zinc-800 dark:text-zinc-200"><span class="text-prime">dev</span>withmike</a>
+							<Link href="/articles" text="dev.withmike" classes="mr-6 text-xl font-semibold text-zinc-800 dark:text-zinc-200" />
 							<div>
 								<div class='flex items-center'>
 									<div class='pointer-events-auto md:hidden'>
@@ -82,7 +82,6 @@ import Link from './Link.astro';
 																		href={item.path}
 																		text={item.name}
 																		classes='block py-2'
-																		data-navLink
 																	/>
 																</li>
 															))
@@ -100,8 +99,7 @@ import Link from './Link.astro';
 														<Link
 															href={item.path}
 															text={item.name}
-															classes='relative block px-3 py-2 transition hover:text-prime'
-															data-navLink
+															classes='relative block px-3 py-2 transition'
 														/>
 													</li>
 												))
@@ -117,11 +115,11 @@ import Link from './Link.astro';
 										>
 											<Icon
 												name='ph:moon-stars'
-												class='hidden text-2xl transition text-zinc-800 dark:text-zinc-200 dark:block hover:text-prime'
+												class='hidden text-2xl transition text-zinc-800 dark:text-zinc-200 dark:block'
 											/>
 											<Icon
 												name='ph:sun'
-												class='text-2xl transition dark:hidden text-zinc-800 dark:text-zinc-200 hover:text-prime'
+												class='text-2xl transition dark:hidden text-zinc-800 dark:text-zinc-200'
 											/>
 										</button>
 									</div>
