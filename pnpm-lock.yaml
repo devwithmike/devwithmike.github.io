@@ -1,5 +1,9 @@
 lockfileVersion: '6.0'
 
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
 dependencies:
   '@astrojs/check':
     specifier: ^0.4.1
@@ -16,6 +20,9 @@ dependencies:
   '@astrojs/tailwind':
     specifier: ^5.1.0
     version: 5.1.0(astro@4.1.1)(tailwindcss@3.4.1)
+  '@iconify-json/mingcute':
+    specifier: ^1.1.17
+    version: 1.1.17
   astro:
     specifier: ^4.1.1
     version: 4.1.1(typescript@5.3.3)
@@ -721,6 +728,12 @@ packages:
     dependencies:
       '@iconify/types': 2.0.0
     dev: true
+
+  /@iconify-json/mingcute@1.1.17:
+    resolution: {integrity: sha512-WTKnn5OicUo18dE3rkJs00sUjOIAui8Ut9yZSXamRfjzmLxuX9FKqYQAbFXaV6lw0T4QwBQ8/y4ftaWl/1Entg==}
+    dependencies:
+      '@iconify/types': 2.0.0
+    dev: false
 
   /@iconify-json/ph@1.1.10:
     resolution: {integrity: sha512-e7owJfx9BgnUVGXKk/243iFV4tHH1UiBDl5mWYkwKoPf4nN2rzPGdD7ISfvwr3SB25VvOteSC5DOVWxjs56Ywg==}
