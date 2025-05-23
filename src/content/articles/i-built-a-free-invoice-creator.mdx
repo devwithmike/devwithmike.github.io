@@ -1,0 +1,52 @@
+---
+title: 'I Built a Free Invoice Creator'
+tags: ["vue", "invoice creator", "web", "free"]
+datetime: 2025-05-23
+image:
+    src: '/images/posts/invoice-creator.jpg'
+    alt: '🧾 Invoice Creator'
+draft: false
+description: Generate professional invoices effortlessly with this free and open-source web app, accessible online or for self-hosting.
+---
+
+
+In this blog post, I'm excited to introduce you to my free invoice creator, a user-friendly tool that allows you to generate invoices with unlimited uses. Whether you're a freelancer, a small business owner, or simply someone who needs to create invoices occasionally, this application can save you time and effort.  
+  
+## Demo
+
+![Invoice Creator Demo GIF](https://github.com/devwithmike/invoice-creator/raw/main/resources/invoice-creator-demo.gif)
+
+## Getting Started  
+  
+The invoice creator is easily accessible through two channels:  
+* Web App: Visit [withmike.co.za/invoice-creator](https://withmike.co.za/invoice-creator) to use the application directly in your web browser.  
+* GitHub: Clone the repository from [devwithmike/invoice-creator](https://github.com/devwithmike/invoice-creator) for self-hosting or customization.  
+  
+Using the invoice creator is straightforward. Simply fill out the form on the left side of the screen. As you enter information, the preview on the right side will automatically update to reflect your selections. Once you're satisfied with the invoice's appearance, click the "Download Invoice" button in the right corner to generate a PDF file that you can save or print.  
+  
+## A Glimpse Under the Hood  
+  
+This invoice creator is built with a combination of modern web development technologies:  
+* Vue.js: A progressive JavaScript framework for building user interfaces.  
+* Vite: A lightning-fast build tool for modern web applications.  
+* Tailwind CSS: A utility-first CSS framework for rapid UI development.  
+  
+One of the key components that makes this application efficient is vue-to-print, a fantastic library that enables seamless printing or saving of any page or component. In this case, vue-to-print is used to capture the invoice preview for download as a PDF.  
+  
+## User Interface and State Management
+  
+The invoice creator's user interface leverages Tailwind CSS for styling and shadcn for Vue components, providing a clean and responsive design. For state management, Pinia is used in conjunction with the pinia-plugin-persistedstate plugin. This combination allows you to save frequently used information, such as sender details, in local storage, eliminating the need for repetitive input and saving you time.  
+  
+For a complete picture of the technologies used, feel free to explore the GitHub repository.  
+  
+## Open to Improvement  
+  
+I'm committed to making this free invoice creator the best it can be. If you have any suggestions for features or enhancements, please don't hesitate to create a pull request on GitHub. Your contributions are welcome!  
+  
+## Support the Development
+  
+If you find this invoice creator useful and would like to support its development, consider buying me a coffee using the link below. Your contribution, no matter how small, is greatly appreciated!  
+  
+<a href="https://www.buymeacoffee.com/withmike" target="_blank"><img src="https://buymeacoffee.com/assets/img/custom_images/yellow_img.png" alt="Buy Me A Coffee" height="41" width="174" /></a>
+  
+**Thank you for reading!**
