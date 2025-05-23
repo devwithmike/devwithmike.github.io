@@ -13,7 +13,7 @@ export default function jsonLDGenerator({ type, post, url }) {
         },
         "headline": "${post.title}",
         "description": "${post.description}",
-        "image": "${post.image ? post.image.src : "/images/default.jpg"}",
+        "image": "${post.image ? post.image.src : "/images/logo-nobg.svg"}",
         "datePublished": "${post.datetime}"
       }
     </script>`;
